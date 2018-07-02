@@ -1,5 +1,6 @@
 <resources>
 
     <string name="app_name">Connect-SDK-Android-Core</string>
+    <string name="progress_searching_devices">Searching for devices…</string>
 
 </resources>
