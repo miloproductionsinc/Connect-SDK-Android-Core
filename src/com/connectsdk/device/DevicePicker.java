@@ -83,8 +83,8 @@ public class DevicePicker {
     public AlertDialog getPickerDialog(String message, final OnItemClickListener listener) {
 
         View view = LayoutInflater.from(activity).inflate(R.layout.v_devices_list, null, false);
-        View progressView = (DevicePickerListView) view.findViewById(R.id.progressView);
-        DevicePickerListView listView = view.findViewById(R.id.deviceListView);
+        View progressView = view.findViewById(R.id.progressView);
+        DevicePickerListView listView = (DevicePickerListView) view.findViewById(R.id.deviceListView);
         listView.setProgressView(progressView);
 
         TextView title = (TextView) activity.getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null);
