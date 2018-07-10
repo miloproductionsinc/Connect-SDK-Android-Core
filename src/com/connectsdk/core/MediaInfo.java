@@ -46,6 +46,7 @@ public class MediaInfo {
     private List<ImageInfo> allImages;
 
     private long duration;
+    private long position;
 
     // @endcond
 
@@ -61,6 +62,8 @@ public class MediaInfo {
         private String description;
         private List<ImageInfo> allImages;
         private SubtitleInfo subtitleInfo;
+
+        private long position;
 
         // @endcond
 
@@ -100,6 +103,11 @@ public class MediaInfo {
             return this;
         }
 
+        public Builder setPosition(long position) {
+            this.position = position;
+            return this;
+        }
+
         public MediaInfo build() {
             return new MediaInfo(this);
         }
@@ -119,6 +127,7 @@ public class MediaInfo {
         description = builder.description;
         subtitleInfo = builder.subtitleInfo;
         allImages = builder.allImages;
+        position = builder.position;
     }
 
     /**
@@ -272,6 +281,10 @@ public class MediaInfo {
         List<ImageInfo> list = new ArrayList<ImageInfo>();
         Collections.addAll(list, images);
         this.setImages(list);
+    }
+
+    public long getPosition() {
+        return position;
     }
 
 }
