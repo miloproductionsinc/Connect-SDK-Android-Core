@@ -22,6 +22,8 @@ package com.connectsdk.core;
 
 import android.support.annotation.NonNull;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,6 +41,7 @@ public class MediaInfo {
     private String mimeType;
     private String description;
     private String title;
+    private JSONObject customData;
 
     /**
      * list of imageInfo objects where [0] is icon, [1] is poster
@@ -62,6 +65,7 @@ public class MediaInfo {
         private String description;
         private List<ImageInfo> allImages;
         private SubtitleInfo subtitleInfo;
+        private JSONObject customData;
 
         private long position;
 
@@ -83,18 +87,14 @@ public class MediaInfo {
         }
 
         public Builder setIcon(@NonNull String iconUrl) {
-            if (iconUrl != null) {
-                createImagesList();
-                allImages.set(0, new ImageInfo(iconUrl));
-            }
+            createImagesList();
+            allImages.set(0, new ImageInfo(iconUrl));
             return this;
         }
 
         public Builder setIcon(@NonNull ImageInfo icon) {
-            if (icon != null) {
-                createImagesList();
-                allImages.set(0, icon);
-            }
+            createImagesList();
+            allImages.set(0, icon);
             return this;
         }
 
@@ -105,6 +105,11 @@ public class MediaInfo {
 
         public Builder setPosition(long position) {
             this.position = position;
+            return this;
+        }
+
+        public Builder setCustomData(JSONObject customData) {
+            this.customData = customData;
             return this;
         }
 
@@ -128,6 +133,7 @@ public class MediaInfo {
         subtitleInfo = builder.subtitleInfo;
         allImages = builder.allImages;
         position = builder.position;
+        customData = builder.customData;
     }
 
     /**
@@ -287,4 +293,7 @@ public class MediaInfo {
         return position;
     }
 
+    public JSONObject getCustomData() {
+        return customData;
+    }
 }
