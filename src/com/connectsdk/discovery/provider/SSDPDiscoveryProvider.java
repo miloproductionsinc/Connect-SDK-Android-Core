@@ -187,10 +187,15 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
             int number = restartNumber;
             @Override
             public void run() {
-                Log.d("begin -> restart", "proccess number: " + number);
-                stop();
-                start();
-                Log.d("end -> restart", "proccess number: " + number);
+                try {
+                    Log.d("begin -> restart", "proccess number: " + number);
+                    stop();
+                    start();
+                    Log.d("end -> restart", "proccess number: " + number);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                    Log.d("restart", "could not start service");
+                }
             }
         });
     }
@@ -204,11 +209,16 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
 
             @Override
             public void run() {
-                Log.d("begin -> reset", "proccess number: " + number);
-                stop();
-                foundServices.clear();
-                discoveredServices.clear();
-                Log.d("end -> reset", "proccess number: " + number);
+                try {
+                    Log.d("begin -> reset", "proccess number: " + number);
+                    stop();
+                    foundServices.clear();
+                    discoveredServices.clear();
+                    Log.d("end -> reset", "proccess number: " + number);
+                }catch (Throwable e) {
+                    e.printStackTrace();
+                    Log.d("reset", "could not reset service");
+                }
             }
         });
     }
