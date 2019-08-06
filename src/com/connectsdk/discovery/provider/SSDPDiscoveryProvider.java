@@ -181,15 +181,25 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
 
     @Override
     public void restart() {
-        stop();
-        start();
+        Util.runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                stop();
+                start();
+            }
+        });
     }
 
     @Override
     public void reset() {
-        stop();
-        foundServices.clear();
-        discoveredServices.clear();
+        Util.runInBackground(new Runnable() {
+            @Override
+            public void run() {
+                stop();
+                foundServices.clear();
+                discoveredServices.clear();
+            }
+        });
     }
 
     @Override
