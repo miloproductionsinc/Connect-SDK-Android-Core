@@ -45,7 +45,7 @@ public final class Util {
 
     static private Handler handler;
 
-    static private final int NUM_OF_THREADS = 2;
+    static private final int NUM_OF_THREADS = 1;
 
     static private Executor executor;
 
