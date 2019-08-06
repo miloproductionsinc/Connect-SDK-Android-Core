@@ -179,25 +179,36 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
         }
     }
 
+    private int restartNumber = 0;
     @Override
     public void restart() {
+        restartNumber+=1;
         Util.runInBackground(new Runnable() {
+            int number = restartNumber;
             @Override
             public void run() {
+                Log.d("begin -> restart", "proccess number: " + number);
                 stop();
                 start();
+                Log.d("end -> restart", "proccess number: " + number);
             }
         });
     }
 
+    private int resetNumber = 0;
     @Override
     public void reset() {
+        resetNumber+=1;
         Util.runInBackground(new Runnable() {
+            int number = resetNumber;
+
             @Override
             public void run() {
+                Log.d("begin -> reset", "proccess number: " + number);
                 stop();
                 foundServices.clear();
                 discoveredServices.clear();
+                Log.d("end -> reset", "proccess number: " + number);
             }
         });
     }
