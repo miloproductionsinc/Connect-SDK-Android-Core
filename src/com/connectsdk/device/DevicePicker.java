@@ -22,6 +22,7 @@ package com.connectsdk.device;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -80,7 +81,7 @@ public class DevicePicker {
      * @param message The title for the AlertDialog
      * @param listener The listener for the ListView to get the item that was clicked on
      */
-    public AlertDialog getPickerDialog(String message, final OnItemClickListener listener) {
+    public AlertDialog getPickerDialog(String message, final OnItemClickListener listener, DialogInterface.OnCancelListener cancelListener) {
 
         View view = LayoutInflater.from(activity).inflate(R.layout.v_devices_list, null, false);
         View progressView = view.findViewById(R.id.progressView);
@@ -92,7 +93,7 @@ public class DevicePicker {
 
         final AlertDialog pickerDialog = new AlertDialog.Builder(activity)
                 .setCustomTitle(title)
-                .setCancelable(true)
+                .setOnCancelListener(cancelListener)
                 .setView(view)
                 .create();
 
