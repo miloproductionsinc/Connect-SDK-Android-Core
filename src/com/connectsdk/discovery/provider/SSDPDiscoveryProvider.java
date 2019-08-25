@@ -179,17 +179,48 @@ public class SSDPDiscoveryProvider implements DiscoveryProvider {
         }
     }
 
+    private int restartNumber = 0;
     @Override
     public void restart() {
-        stop();
-        start();
+        restartNumber+=1;
+        Util.runInBackground(new Runnable() {
+            int number = restartNumber;
+            @Override
+            public void run() {
+                try {
+                    Log.d("begin -> restart", "proccess number: " + number);
+                    stop();
+                    start();
+                    Log.d("end -> restart", "proccess number: " + number);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                    Log.d("restart", "could not start service");
+                }
+            }
+        });
     }
 
+    private int resetNumber = 0;
     @Override
     public void reset() {
-        stop();
-        foundServices.clear();
-        discoveredServices.clear();
+        resetNumber+=1;
+        Util.runInBackground(new Runnable() {
+            int number = resetNumber;
+
+            @Override
+            public void run() {
+                try {
+                    Log.d("begin -> reset", "proccess number: " + number);
+                    stop();
+                    foundServices.clear();
+                    discoveredServices.clear();
+                    Log.d("end -> reset", "proccess number: " + number);
+                }catch (Throwable e) {
+                    e.printStackTrace();
+                    Log.d("reset", "could not reset service");
+                }
+            }
+        });
     }
 
     @Override

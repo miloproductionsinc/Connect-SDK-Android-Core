@@ -1,10 +1,10 @@
 /*
  * DevicePicker
  * Connect SDK
- * 
+ *
  * Copyright (c) 2014 LG Electronics.
  * Created by Hyun Kook Khang on 19 Jan 2014
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -22,11 +22,14 @@ package com.connectsdk.device;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.connectsdk.R;
 
 /**
  * ###Overview
@@ -41,7 +44,7 @@ public class DevicePicker {
 
     /**
      * Creates a new DevicePicker
-     * 
+     *
      * @param activity Activity that DevicePicker will appear in
      */
     public DevicePicker(Activity activity) {
@@ -54,7 +57,7 @@ public class DevicePicker {
 
     /**
      * Sets a selected device.
-     * 
+     *
      * @param device Device that has been selected.
      */
     public void pickDevice(ConnectableDevice device) {
@@ -78,21 +81,25 @@ public class DevicePicker {
      * @param listener The listener for the ListView to get the item that was clicked on
      */
     public AlertDialog getPickerDialog(String message, final OnItemClickListener listener) {
-        final DevicePickerListView view = new DevicePickerListView(activity);
+
+        View view = LayoutInflater.from(activity).inflate(R.layout.v_devices_list, null, false);
+        View progressView = view.findViewById(R.id.progressView);
+        DevicePickerListView listView = (DevicePickerListView) view.findViewById(R.id.deviceListView);
+        listView.setProgressView(progressView);
 
         TextView title = (TextView) activity.getLayoutInflater().inflate(android.R.layout.simple_list_item_1, null);
         title.setText(message);
 
         final AlertDialog pickerDialog = new AlertDialog.Builder(activity)
-        .setCustomTitle(title)
-        .setCancelable(true)
-        .setView(view)
-        .create();
+                .setCustomTitle(title)
+                .setCancelable(true)
+                .setView(view)
+                .create();
 
-        view.setOnItemClickListener(new OnItemClickListener () {
+        listView.setOnItemClickListener(new OnItemClickListener () {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                    long arg3) {
+                                    long arg3) {
                 listener.onItemClick(arg0, arg1, arg2, arg3);
                 pickerDialog.dismiss();
             }

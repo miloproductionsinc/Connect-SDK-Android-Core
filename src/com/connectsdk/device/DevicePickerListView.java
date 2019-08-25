@@ -1,10 +1,10 @@
 /*
  * DevicePickerListView
  * Connect SDK
- * 
+ *
  * Copyright (c) 2014 LG Electronics.
  * Created by Hyun Kook Khang on 19 Jan 2014
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -21,6 +21,8 @@
 package com.connectsdk.device;
 
 import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ListView;
 
 import com.connectsdk.core.Util;
@@ -29,10 +31,16 @@ import com.connectsdk.discovery.DiscoveryManagerListener;
 import com.connectsdk.service.command.ServiceCommandError;
 
 public class DevicePickerListView extends ListView implements DiscoveryManagerListener {
+
     DevicePickerAdapter pickerAdapter;
+    private View mProgressView;
 
     public DevicePickerListView(Context context) {
-        super(context);
+        this(context, null);
+    }
+
+    public DevicePickerListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
         pickerAdapter = new DevicePickerAdapter(context);
 
@@ -84,8 +92,12 @@ public class DevicePickerListView extends ListView implements DiscoveryManagerLi
                     }
                 }
 
-                if (index == -1)
+                if (index == -1) {
                     pickerAdapter.add(device);
+                }
+                if (mProgressView != null) {
+                    mProgressView.setVisibility(pickerAdapter.getCount() > 0 ? GONE : VISIBLE);
+                }
             }
         });
     }
@@ -106,7 +118,14 @@ public class DevicePickerListView extends ListView implements DiscoveryManagerLi
             @Override
             public void run() {
                 pickerAdapter.remove(device);
+                if (mProgressView != null) {
+                    mProgressView.setVisibility(pickerAdapter.getCount() > 0 ? GONE : VISIBLE);
+                }
             }
         });
+    }
+
+    public void setProgressView(View progress) {
+        mProgressView = progress;
     }
 }
